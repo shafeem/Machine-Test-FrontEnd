@@ -1,11 +1,12 @@
 // import React from "react";
 
-const Login = () => {
+const SignUp = () => {
   return (
     <div className="flex justify-center items-center min-h-screen bg-gradient-to-br from-blue-500 to-purple-600">
       <div className="max-w-md w-full mx-auto bg-white rounded-lg p-5 border-4 border-gray-300">
-        <h2 className="font-serif text-xl  mb-2 text-center text-indigo-600">
-          Sign In
+        <h2 className="font-serif text-xl mb-2 text-center text-indigo-600">
+          Welcome!
+          <br /> Let&apos;s begin the great adventure
         </h2>
 
         <div className="mb-4">
@@ -45,16 +46,10 @@ const Login = () => {
         <div className="border-t border-gray-600 my-4"></div>
 
         <div className="grid grid-cols-1 gap-2">
-          <button className="bg-red-500 hover:bg-red-700 text-white font-sans py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full">
-            Sign in with Google
-          </button>
-          <button className="bg-blue-800 hover:bg-blue-900 text-white font-sans py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full mb-4">
-            Sign in with GitHub
-          </button>
           <p className="text-center text-gray-500">
-            Don&apos;t have an account?{" "}
-            <a href="/Sign-up" className="text-blue-500 hover:text-blue-700">
-              Sign up here
+            Already have an account?{" "}
+            <a href="/" className="text-blue-500 hover:text-blue-700">
+              Sign In here
             </a>
           </p>
         </div>
@@ -63,4 +58,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default SignUp;
