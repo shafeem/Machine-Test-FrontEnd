@@ -1,50 +1,31 @@
 // import React from 'react'
 import images from "../images/coursecreation.jpg";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "../axios/userInstance";
-import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
-
-const CreateCource = () => {
-  const [title, setTitle] = useState("");
-  const [category, setCategory] = useState("");
-  const [duration, setDuration] = useState("");
-  const [description, setDescription] = useState("");
+const CourseDetails = () => {
   const navigate = useNavigate();
+  const { id } = useParams();
+  const [data, setData] = useState({});
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      // if (!title || !category || !duration || !description || !image) {
-      //     console.error('All fields are required.');
-      //     return;
-      //   }
 
-      await axios({
-        url: "/create-course",
+  useEffect(()=>{
+
+    console.log(id);
+     axios({
+        url: "/course-details",
         method: "POST",
-        data: {
-          title,
-          category,
-          duration,
-          description,
-        },
-      }).then((res) => {
-        console.log(res);
-        if (res.data.status == 400 || res.data.status == 500) {
-          Swal.fire({
-            icon: "error",
-            title: `${res.data.message}`,
-          });
-        }else{
-            navigate('/home')
+        data:{
+            id:id
         }
-      });
-    } catch (error) {
-      console.log(error);
-    }
-  };
+      }).then((res) => {
+        setData(res?.data?.course);
+    })
+  },[id])
+
+  
   return (
     <>
       <div className=" w-screen h-screen bg-gradient-to-br from-blue-500 to-purple-600">
@@ -58,13 +39,10 @@ const CreateCource = () => {
             />
             <div className="w-full lg:w-7/12 bg-white p-5 rounded-lg lg:rounded-l-none">
               <h3 className="pt-4 text-2xl text-center text-indigo-600 font-serif">
-                Crete New Course
+                 Course Details
               </h3>
               <form
                 className="px-8 pt-6 pb-8 mb-4 bg-white rounded"
-                onSubmit={(e) => {
-                  handleSubmit(e);
-                }}
               >
                 <div className="mb-4 md:flex md:justify-between">
                   <div className="mb-4 md:mr-2 md:mb-0">
@@ -79,10 +57,8 @@ const CreateCource = () => {
                       id="firstName"
                       type="text"
                       required
-                      value={title}
-                      onChange={(e) => {
-                        setTitle(e.target.value);
-                      }}
+                      value={data?.title}
+                     
                       placeholder="Course Title"
                     />
                   </div>
@@ -99,10 +75,7 @@ const CreateCource = () => {
                       id="lastName"
                       type="text"
                       required
-                      value={category}
-                      onChange={(e) => {
-                        setCategory(e.target.value);
-                      }}
+                      value={data?.category}
                       placeholder="Course Category"
                     />
                   </div>
@@ -119,10 +92,7 @@ const CreateCource = () => {
                     className="w-full px-3 py-2 mb-3 text-sm leading-tight text-gray-700 border rounded shadow appearance-none font-serif focus:outline-none focus:shadow-outline"
                     type="text"
                     required
-                    value={duration}
-                    onChange={(e) => {
-                      setDuration(e.target.value);
-                    }}
+                    value={data?.duration}
                     placeholder="Course Duration"
                   />
                 </div>
@@ -137,20 +107,17 @@ const CreateCource = () => {
                     className="w-full px-3 font-serif py-2 mb-3 text-sm leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
                     type="text"
                     required
-                    value={description}
-                    onChange={(e) => {
-                      setDescription(e.target.value);
-                    }}
+                    value={data?.description}
                     placeholder="Course Discription"
                   />
                 </div>
 
                 <div className="mb-6 text-center">
                   <button
-                    className="w-full px-4 py-2 font-bold text-white bg-blue-500 rounded-full hover:bg-blue-700 font-serif focus:outline-none focus:shadow-outline"
-                    type="submit"
+                    className="w-full px-4 py-2 text-white bg-blue-500 rounded-full hover:bg-blue-700 font-serif focus:outline-none focus:shadow-outline"
+                    onClick={() => navigate("/courses")}
                   >
-                    Submit
+                    Back To Courses
                   </button>
                 </div>
                 <hr className="mb-6 border-t" />
@@ -163,4 +130,4 @@ const CreateCource = () => {
   );
 };
 
-export default CreateCource;
+export default CourseDetails;

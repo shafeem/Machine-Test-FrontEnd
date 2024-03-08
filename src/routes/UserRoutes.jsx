@@ -3,7 +3,10 @@ import { Routes, Route } from "react-router-dom";
 import Login from "../Components/Login";
 import SignUp from "../Components/SignUp";
 import Home from "../Components/Home";
-import Courses from "../Components/CreateCource";
+import CreateCourses from "../Components/CreateCource";
+import Courses from "../Components/Courses";
+import CourseDetails from "../Components/CourseDetails";
+import CreateChapter from "../Components/CreateChapter";
 
 const UserRoutes = () => {
   return (
@@ -13,8 +16,10 @@ const UserRoutes = () => {
           <Route path="/" element={<Login />} />
           <Route path="/Sign-up" element={<SignUp />} />
           <Route path="/home" element={<Home />} />
-          <Route path="/create-course" element={<Courses />} />
-          {/* <Route path="/courses" element={<Home />} /> */}
+          <Route path="/create-course" element={<CreateCourses />} />
+          <Route path="/courses" element={<Courses />} />
+          <Route path="/courses/:id" element={<CourseDetails />} />
+          <Route path="/create-chapter/:id" element={<CreateChapter />} />
 
         </Routes>
       </div>

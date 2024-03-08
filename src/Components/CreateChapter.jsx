@@ -4,35 +4,30 @@ import { useState } from "react";
 import axios from "../axios/userInstance";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
-
-const CreateCource = () => {
+const CreateChapter = () => {
   const [title, setTitle] = useState("");
-  const [category, setCategory] = useState("");
-  const [duration, setDuration] = useState("");
   const [description, setDescription] = useState("");
   const navigate = useNavigate();
+  const {id} = useParams()
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      // if (!title || !category || !duration || !description || !image) {
-      //     console.error('All fields are required.');
-      //     return;
-      //   }
 
       await axios({
-        url: "/create-course",
+        url: "/create-chapter",
         method: "POST",
         data: {
           title,
-          category,
-          duration,
           description,
+          id
         },
       }).then((res) => {
         console.log(res);
-        if (res.data.status == 400 || res.data.status == 500) {
+        if (res.data.status == 400 || res.data.status == 500 || res.data.status == 404  ) {
           Swal.fire({
             icon: "error",
             title: `${res.data.message}`,
@@ -58,7 +53,7 @@ const CreateCource = () => {
             />
             <div className="w-full lg:w-7/12 bg-white p-5 rounded-lg lg:rounded-l-none">
               <h3 className="pt-4 text-2xl text-center text-indigo-600 font-serif">
-                Crete New Course
+                Crete New Chapter
               </h3>
               <form
                 className="px-8 pt-6 pb-8 mb-4 bg-white rounded"
@@ -87,45 +82,10 @@ const CreateCource = () => {
                     />
                   </div>
 
-                  <div className="md:ml-2">
-                    <label
-                      className="block mb-2 text-sm font-bold font-serif text-gray-700"
-                      htmlFor="lastName"
-                    >
-                      Category
-                    </label>
-                    <input
-                      className="w-full px-3 py-2 text-sm leading-tight text-gray-700 border rounded shadow appearance-none font-serif focus:outline-none focus:shadow-outline"
-                      id="lastName"
-                      type="text"
-                      required
-                      value={category}
-                      onChange={(e) => {
-                        setCategory(e.target.value);
-                      }}
-                      placeholder="Course Category"
-                    />
-                  </div>
+                 
                 </div>
 
-                <div className="mb-4">
-                  <label
-                    className="block mb-2 font-serif text-sm font-bold text-gray-700"
-                    htmlFor="email"
-                  >
-                    Duration
-                  </label>
-                  <input
-                    className="w-full px-3 py-2 mb-3 text-sm leading-tight text-gray-700 border rounded shadow appearance-none font-serif focus:outline-none focus:shadow-outline"
-                    type="text"
-                    required
-                    value={duration}
-                    onChange={(e) => {
-                      setDuration(e.target.value);
-                    }}
-                    placeholder="Course Duration"
-                  />
-                </div>
+                
                 <div className="mb-4">
                   <label
                     className="block mb-2 font-serif text-sm font-bold text-gray-700"
@@ -141,7 +101,7 @@ const CreateCource = () => {
                     onChange={(e) => {
                       setDescription(e.target.value);
                     }}
-                    placeholder="Course Discription"
+                    placeholder="Chapter Discription"
                   />
                 </div>
 
@@ -163,4 +123,4 @@ const CreateCource = () => {
   );
 };
 
-export default CreateCource;
+export default CreateChapter;
