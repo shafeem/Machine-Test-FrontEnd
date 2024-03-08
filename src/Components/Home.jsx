@@ -1,7 +1,7 @@
 import { useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import first from "../images/courses.jpg";
-import second from "../images/create_courses.jpg";
+import first from '../images/courses.jpg'
+import second from '../images/create_courses.jpg'
 
 const GlossyCard = () => {
   const useGlossEffect = (cardRef, cardContentRef, glossRef) => {
@@ -78,14 +78,7 @@ const GlossyCard = () => {
     }, [cardRef, cardContentRef, glossRef]);
   };
 
-  const Card = ({
-    cardRef,
-    cardContentRef,
-    glossRef,
-    destination,
-    name,
-    images,
-  }) => {
+  const Card = ({ cardRef, cardContentRef, glossRef, destination ,name , images}) => {
     const navigate = useNavigate();
 
     useGlossEffect(cardRef, cardContentRef, glossRef);
@@ -100,16 +93,14 @@ const GlossyCard = () => {
         <div className="max-w-md w-full mx-auto bg-white rounded-lg p-5 border-4 border-gray-300">
           <div className="card relative" ref={cardRef}>
             <div className="content relative" ref={cardContentRef}>
-              <div
-                className="gloss absolute top-0 left-0 w-full h-full"
-                ref={glossRef}
-              />
+              <div className="gloss absolute top-0 left-0 w-full h-full" ref={glossRef} />
               <img
                 className="w-full rounded-lg"
                 src={images}
                 alt="chain links"
               />
-
+             
+             
               <button
                 onClick={handleButtonClick}
                 className="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-sans py-2 px-4 rounded focus:outline-none focus:shadow-outline"
@@ -130,16 +121,17 @@ const GlossyCard = () => {
           cardRef={useRef(null)}
           cardContentRef={useRef(null)}
           glossRef={useRef(null)}
-          name="Create Course"
+
+          name = 'Create Course'
           images={second}
-          destination="/create-course"
+          destination="/create-course" 
         />
         <Card
           cardRef={useRef(null)}
           cardContentRef={useRef(null)}
           glossRef={useRef(null)}
           destination="/courses"
-          name=" Courses"
+          name = ' Courses'
           images={first}
         />
       </div>

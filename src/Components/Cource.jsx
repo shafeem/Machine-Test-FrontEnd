@@ -1,43 +1,165 @@
-import React, { useState } from 'react';
+// import React from 'react'
+import images from "../images/coursecreation.jpg";
+import { useState } from "react";
+import axios from "../axios/userInstance";
+import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
 
-const Courses = () => {
-  const [title, setTitle] = useState('');
-  const [category, setCategory] = useState('');
-  const [level, setLevel] = useState('');
-  const [description, setDescription] = useState('');
-  const [faq, setFaq] = useState([{ question: '', answer: '' }]);
-  const [coverImage, setCoverImage] = useState(null);
-  const [salesVideo, setSalesVideo] = useState(null);
+const Cource = () => {
+  const [title, setTitle] = useState("");
+  const [category, setCategory] = useState("");
+  const [duration, setDuration] = useState("");
+  const [description, setDescription] = useState("");
+  const navigate = useNavigate();
 
-  const handleFaqChange = (index, field, value) => {
-    const newFaq = [...faq];
-    newFaq[index][field] = value;
-    setFaq(newFaq);
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      // if (!title || !category || !duration || !description || !image) {
+      //     console.error('All fields are required.');
+      //     return;
+      //   }
+
+      await axios({
+        url: "/create-course",
+        method: "POST",
+        data: {
+          title,
+          category,
+          duration,
+          description,
+        },
+      }).then((res) => {
+        console.log(res);
+        if (res.data.status == 400 || res.data.status == 500) {
+          Swal.fire({
+            icon: "error",
+            title: `${res.data.message}`,
+          });
+        }else{
+            navigate('/home')
+        }
+      });
+    } catch (error) {
+      console.log(error);
+    }
   };
-
-  const handleFileChange = (e, setFile) => {
-    setFile(e.target.files[0]);
-  };
-
   return (
-    <div>
-      <h1>My Courses / Create new course</h1>
-      <input type="text" placeholder="Title" value={title} onChange={e => setTitle(e.target.value)} />
-      <input type="text" placeholder="Category" value={category} onChange={e => setCategory(e.target.value)} />
-      <input type="text" placeholder="Level" value={level} onChange={e => setLevel(e.target.value)} />
-      <textarea placeholder="Description" value={description} onChange={e => setDescription(e.target.value)} />
-      {faq.map((faqItem, index) => (
-        <div key={index}>
-          <input type="text" placeholder="Question" value={faqItem.question} onChange={e => handleFaqChange(index, 'question', e.target.value)} />
-          <input type="text" placeholder="Answer" value={faqItem.answer} onChange={e => handleFaqChange(index, 'answer', e.target.value)} />
+    <>
+      <div className=" w-screen h-screen bg-gradient-to-br from-blue-500 to-purple-600">
+        <div className="flex justify-center items-center  pt-5">
+          <div className="w-screen xl:w-3/4 lg:w-11/12 flex">
+            <div
+              className="w-full h-auto bg-gray-400 hidden lg:block lg:w-5/12 bg-cover rounded-l-lg"
+              style={{
+                backgroundImage: ` url(${images})`,
+              }}
+            />
+            <div className="w-full lg:w-7/12 bg-white p-5 rounded-lg lg:rounded-l-none">
+              <h3 className="pt-4 text-2xl text-center text-indigo-600 font-serif">
+                Crete New Course
+              </h3>
+              <form
+                className="px-8 pt-6 pb-8 mb-4 bg-white rounded"
+                onSubmit={(e) => {
+                  handleSubmit(e);
+                }}
+              >
+                <div className="mb-4 md:flex md:justify-between">
+                  <div className="mb-4 md:mr-2 md:mb-0">
+                    <label
+                      className="block mb-2 text-sm font-bold font-serif text-gray-700"
+                      htmlFor="firstName"
+                    >
+                      Title
+                    </label>
+                    <input
+                      className="w-full px-3 py-2 text-sm leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline font-serif"
+                      id="firstName"
+                      type="text"
+                      required
+                      value={title}
+                      onChange={(e) => {
+                        setTitle(e.target.value);
+                      }}
+                      placeholder="Course Title"
+                    />
+                  </div>
+
+                  <div className="md:ml-2">
+                    <label
+                      className="block mb-2 text-sm font-bold font-serif text-gray-700"
+                      htmlFor="lastName"
+                    >
+                      Category
+                    </label>
+                    <input
+                      className="w-full px-3 py-2 text-sm leading-tight text-gray-700 border rounded shadow appearance-none font-serif focus:outline-none focus:shadow-outline"
+                      id="lastName"
+                      type="text"
+                      required
+                      value={category}
+                      onChange={(e) => {
+                        setCategory(e.target.value);
+                      }}
+                      placeholder="Course Category"
+                    />
+                  </div>
+                </div>
+
+                <div className="mb-4">
+                  <label
+                    className="block mb-2 font-serif text-sm font-bold text-gray-700"
+                    htmlFor="email"
+                  >
+                    Duration
+                  </label>
+                  <input
+                    className="w-full px-3 py-2 mb-3 text-sm leading-tight text-gray-700 border rounded shadow appearance-none font-serif focus:outline-none focus:shadow-outline"
+                    type="text"
+                    required
+                    value={duration}
+                    onChange={(e) => {
+                      setDuration(e.target.value);
+                    }}
+                    placeholder="Course Duration"
+                  />
+                </div>
+                <div className="mb-4">
+                  <label
+                    className="block mb-2 font-serif text-sm font-bold text-gray-700"
+                    htmlFor="email"
+                  >
+                    Description
+                  </label>
+                  <input
+                    className="w-full px-3 font-serif py-2 mb-3 text-sm leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
+                    type="text"
+                    required
+                    value={description}
+                    onChange={(e) => {
+                      setDescription(e.target.value);
+                    }}
+                    placeholder="Course Discription"
+                  />
+                </div>
+
+                <div className="mb-6 text-center">
+                  <button
+                    className="w-full px-4 py-2 font-bold text-white bg-blue-500 rounded-full hover:bg-blue-700 font-serif focus:outline-none focus:shadow-outline"
+                    type="submit"
+                  >
+                    Submit
+                  </button>
+                </div>
+                <hr className="mb-6 border-t" />
+              </form>
+            </div>
+          </div>
         </div>
-      ))}
-      <input type="file" onChange={e => handleFileChange(e, setCoverImage)} />
-      <input type="file" onChange={e => handleFileChange(e, setSalesVideo)} />
-      <button>Save as Draft</button>
-      <button>Save & Continue</button>
-    </div>
+      </div>
+    </>
   );
 };
 
-export default Courses;
+export default Cource;
