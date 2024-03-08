@@ -7,6 +7,7 @@ import CreateCourses from "../Components/CreateCource";
 import Courses from "../Components/Courses";
 import CourseDetails from "../Components/CourseDetails";
 import CreateChapter from "../Components/CreateChapter";
+import ChapterDetails from '../Components/ChapterDetails'
 
 const UserRoutes = () => {
   return (
@@ -20,6 +21,7 @@ const UserRoutes = () => {
           <Route path="/courses" element={<Courses />} />
           <Route path="/courses/:id" element={<CourseDetails />} />
           <Route path="/create-chapter/:id" element={<CreateChapter />} />
+          <Route path="/chapter-details/:id" element={<ChapterDetails />} />
 
         </Routes>
       </div>
