@@ -5,7 +5,7 @@ import axios from "../axios/userInstance";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 
-const Cource = () => {
+const CreateCource = () => {
   const [title, setTitle] = useState("");
   const [category, setCategory] = useState("");
   const [duration, setDuration] = useState("");
@@ -162,4 +162,4 @@ const Cource = () => {
   );
 };
 
-export default Cource;
+export default CreateCource;
